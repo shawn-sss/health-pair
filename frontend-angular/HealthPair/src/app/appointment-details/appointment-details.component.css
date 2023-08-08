@@ -1,0 +1,31 @@
+.blackText {
+  color: black !important;
+}
+
+.h2container {
+  width: 40%;
+  background-color: white;
+}
+
+:host /deep/ ngb-timepicker .btn-link {
+  color: red;
+}
+
+:host /deep/ ngb-timepicker .btn {
+  color: red;
+}
+
+:host /deep/ ngb-timepicker .btn-outline-primary {
+  border-color: red !important;
+  box-shadow: none !important;
+  background-color: white !important;
+  color: red !important;
+}
+
+:host /deep/ ngb-timepicker .btn-outline-primary:hover {
+  background-color: white;
+}
+
+:host /deep/ mat-calendar-body-selected .mat-calendar-body-selected {
+  background-color: yellow !important;
+}

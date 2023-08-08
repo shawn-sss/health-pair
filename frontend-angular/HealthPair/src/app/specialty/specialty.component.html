@@ -1,0 +1,48 @@
+<div
+  *ngIf="mySpecialties"
+  placeholder="Loading..."
+  class="shadow-lg rounded my-2 bg-white container"
+  style="max-width: 80%"
+>
+  <ul class="models" style="list-style-type: none; margin: 0; padding: 0">
+    <ul class="models" style="list-style-type: none; margin: 0; padding: 0">
+      <br />
+      <h2>Current Specialties:</h2>
+      <br />
+      <li *ngFor="let specialty of mySpecialties">
+        <div *ngIf="specialty.specialtyId">
+          <div>Specialty: {{ specialty.specialty }}</div>
+          <button
+            class="delete"
+            title="delete specialty"
+            (click)="delete(specialty)"
+          >
+            Delete
+          </button>
+          <br /><br />
+        </div>
+      </li>
+    </ul>
+  </ul>
+  <br />
+  <br />
+  <div *ngIf="this.createdMessage">{{ this.createdMessage }}</div>
+  <div>
+    <label>
+      <h2>Add Specialty:</h2>
+      <div>
+        <label>
+          Specialty:
+          <input type="text" #specialtyName />
+        </label>
+      </div> </label
+    ><br />
+    <button
+      class="newButton"
+      (click)="AddSpecialty(specialtyName.value); specialtyName.value = ''"
+    >
+      Add Specialty
+    </button>
+  </div>
+  <br />
+</div>

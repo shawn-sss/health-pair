@@ -1,0 +1,112 @@
+<div class="text-center rounded">
+  <div class="container rounded h2container mt-2">
+    <h2>Enter your details...</h2>
+  </div>
+  <mdb-card>
+    <mdb-card-body class="blackText">
+      Selected Dr:
+      <span *ngIf="currentProvider"
+        >{{ currentProvider.providerFirstName }}
+        {{ currentProvider.providerLastName }}</span
+      >
+      <span *ngIf="currentProvider == undefined">DOCTOR NOT FOUND</span>
+      <br />
+      <br />
+      Selected Location:
+      <span *ngIf="currentProvider"
+        >{{ currentProvider.facilityName }} in
+        {{ currentProvider.facilityCity }},{{
+          currentProvider.facilityState
+        }}</span
+      >
+      <span *ngIf="currentProvider == undefined">DOCTOR NOT FOUND</span>
+      <br />
+      <br />
+      <mdb-card-text class="blackText">
+        <div class="row blackText">
+          <div class="col">
+            <h2>User Information:</h2>
+            <br />
+            Name:
+            <span *ngIf="currentPatient"
+              >{{ currentPatient.patientFirstName }}
+              {{ currentPatient.patientLastName }}</span
+            >
+            <span *ngIf="currentPatient == undefined">PATIENT NOT FOUND</span>
+            <br />
+            Phone:
+            <span *ngIf="currentPatient">{{
+              currentPatient.patientPhoneNumber
+            }}</span>
+            <span *ngIf="currentPatient == undefined">PATIENT NOT FOUND</span>
+            <br />
+            Address:
+            <span *ngIf="currentPatient">{{
+              currentPatient.patientAddress1
+            }}</span>
+            <span *ngIf="currentPatient == undefined">PATIENT NOT FOUND</span>
+            <br />
+            City:
+            <span *ngIf="currentPatient">{{ currentPatient.patientCity }}</span>
+            <span *ngIf="currentPatient == undefined">PATIENT NOT FOUND</span>
+            <br />
+            State:
+            <span *ngIf="currentPatient">{{
+              currentPatient.patientState
+            }}</span>
+            <span *ngIf="currentPatient == undefined">PATIENT NOT FOUND</span>
+            <br />
+            Zip Code:
+            <span *ngIf="currentPatient">{{
+              currentPatient.patientZipcode
+            }}</span>
+            <span *ngIf="currentPatient == undefined">PATIENT NOT FOUND</span>
+            <br />
+          </div>
+          <div class="col">
+            <!-- DATE -->
+            <div
+              class="d-flex justify-content-center blackText"
+              style="font-size: 1.5rem"
+            >
+              <mat-form-field class="blackText">
+                <mat-label class="blackText">Appointment Date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="picker1"
+                  [formControl]="date"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker1"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <!-- TIME -->
+            <div class="d-flex justify-content-center">
+              <ngb-timepicker
+                [(ngModel)]="time"
+                [meridian]="meridian"
+              ></ngb-timepicker>
+            </div>
+          </div>
+        </div>
+        <span *ngIf="responseText">{{ responseText }}</span>
+        <button
+          type="button"
+          class="nextButton text-center"
+          (click)="onSubmit(this.date.value, time)"
+          style="min-width: 340px"
+        >
+          <span>Schedule Appointment </span>
+        </button>
+      </mdb-card-text>
+    </mdb-card-body>
+  </mdb-card>
+  <br />
+</div>
+<app-alert></app-alert>
+<button class="mb-2 mt-1 newButton" (click)="goBack()">Go Back</button>
+<br />
+<br />

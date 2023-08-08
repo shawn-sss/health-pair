@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: healthpair-front
+  labels:
+    app: healthpair
+    role: front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: healthpair
+      role: front
+  template:
+    metadata:
+      labels:
+        app: healthpair
+        role: front
+    spec:
+      containers:
+        - name: healthpair-front
+          image: arlingtonrev/healthpairclientapp:1.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80

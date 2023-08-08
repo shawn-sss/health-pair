@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: healthpair-db
+  labels:
+    app: healthpair
+    role: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: healthpair
+      role: db
+  template:
+    metadata:
+      labels:
+        app: healthpair
+        role: db
+    spec:
+      containers:
+        - name: healthpair-db
+          image: arlingtonrev/healthpair-db:1.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5432

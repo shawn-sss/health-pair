@@ -1,0 +1,27 @@
+.navButton {
+  background-color: red;
+  color: white !important;
+  border: 2px solid white;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transition-duration: 0.4s;
+  padding: 12px 34px;
+}
+
+.navButton:hover {
+  background-color: white;
+  color: red !important;
+  border: 2px solid red;
+}
+
+a {
+  color: black !important;
+}
+
+.active {
+  text-decoration: underline;
+}
+
+.navbar-toggler {
+  background-color: red !important;
+}

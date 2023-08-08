@@ -1,0 +1,44 @@
+<div *ngIf="appointments.length > 0">
+  <div class="container rounded h2container mt-2">
+    <h2>
+      Appointments for {{ this.currentPatient.patientFirstName }}
+      {{ this.currentPatient.patientLastName }}
+    </h2>
+  </div>
+  <br />
+  <div
+    *ngFor="let appointment of appointments; let i = index"
+    class="shadow-lg rounded py-2 px-4 bg-white"
+  >
+    <br />
+    <div
+      *ngIf="this.currentPatient.patientId == this.appointment.patientId"
+      class="usersAppointment mb-3"
+    >
+      <p><b>Date:</b> {{ this.appointment.appointmentDate | date }}</p>
+      <p>
+        <b>Time:</b> {{ this.appointment.appointmentDate | date : "shortTime" }}
+      </p>
+      <p>
+        <b>Provider's Name: </b>{{ this.appointment.providerFirstName }}
+        {{ this.appointment.providerLastName }}
+      </p>
+      <p>
+        <b>Provider's phone number: </b
+        >{{ this.appointment.providerPhoneNumber }}
+      </p>
+      <button (click)="CancelAppointment(this.appointment)">
+        Cancel Appointment
+      </button>
+      <br />
+    </div>
+  </div>
+</div>
+<div
+  *ngIf="appointments.length == 0"
+  class="shadow-lg rounded py-4 bg-white container"
+  style="max-width: 60%"
+>
+  No Appointments found for {{ this.currentPatient.patientFirstName }}
+  {{ this.currentPatient.patientLastName }}!
+</div>

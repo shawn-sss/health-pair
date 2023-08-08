@@ -1,0 +1,48 @@
+<div
+  *ngIf="myInsurances"
+  placeholder="Loading..."
+  class="shadow-lg rounded my-2 bg-white container"
+  style="max-width: 80%"
+>
+  <ul class="models" style="list-style-type: none; margin: 0; padding: 0">
+    <ul class="models" style="list-style-type: none; margin: 0; padding: 0">
+      <br />
+      <h2>Current Insurances:</h2>
+      <br />
+      <li *ngFor="let insurance of myInsurances">
+        <div *ngIf="insurance.insuranceId">
+          <div>Insurance: {{ insurance.insuranceName }}</div>
+          <button
+            class="delete"
+            title="delete insurance"
+            (click)="delete(insurance)"
+          >
+            Delete
+          </button>
+          <br /><br />
+        </div>
+      </li>
+    </ul>
+  </ul>
+  <br />
+  <br />
+  <div *ngIf="this.createdMessage">{{ this.createdMessage }}</div>
+  <div>
+    <label>
+      <h2>Add Insurance:</h2>
+      <div>
+        <label>
+          Insurance Name:
+          <input type="text" #InsuranceName />
+        </label>
+      </div> </label
+    ><br />
+    <button
+      class="newButton"
+      (click)="add(InsuranceName.value); InsuranceName.value = ''"
+    >
+      Add Insurance
+    </button>
+  </div>
+  <br />
+</div>

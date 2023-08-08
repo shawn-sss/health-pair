@@ -1,0 +1,88 @@
+<div
+  *ngIf="myFacilities"
+  placeholder="Loading..."
+  class="shadow-lg rounded my-2 bg-white container"
+  style="max-width: 80%"
+>
+  <ul class="models" style="list-style-type: none; margin: 0; padding: 0">
+    <ul class="models" style="list-style-type: none; margin: 0; padding: 0">
+      <br />
+      <h2>Current Facilities:</h2>
+      <br />
+      <li *ngFor="let facility of myFacilities">
+        <div *ngIf="facility.facilityId">
+          <div>Facility: {{ facility.facilityName }}</div>
+          <span
+            >Address: {{ facility.facilityAddress1 }},
+            {{ facility.facilityCity }}, {{ facility.facilityState }}.
+            {{ facility.facilityZipcode }}
+          </span>
+          <button
+            class="delete"
+            title="delete facility"
+            (click)="delete(facility)"
+          >
+            Delete
+          </button>
+          <br /><br />
+        </div>
+      </li>
+    </ul>
+  </ul>
+  <br />
+  <br />
+  <div *ngIf="this.createdMessage">{{ this.createdMessage }}</div>
+  <div>
+    <label>
+      <h2>Add Facility:</h2>
+      <div>
+        <label>
+          Facility Name:
+          <input type="text" #FacilityName /> </label
+        ><br />
+        <label>
+          Street and Number:
+          <input type="text" #FacilityAddress1 /> </label
+        ><br />
+        <label>
+          City:
+          <input type="text" #FacilityCity /> </label
+        ><br />
+        <label>
+          State:
+          <input type="text" #FacilityState /> </label
+        ><br />
+        <label>
+          Zipcode:
+          <input type="text" #FacilityZipcode /> </label
+        ><br />
+        <label>
+          Phone Number:
+          <input type="text" #FacilityPhoneNumber /> </label
+        ><br />
+      </div> </label
+    ><br /><br />
+    <button
+      class="newButton"
+      (click)="
+        add(
+          FacilityName.value,
+          FacilityAddress1.value,
+          FacilityCity.value,
+          FacilityState.value,
+          FacilityZipcode.value,
+          FacilityPhoneNumber.value
+        );
+        FacilityName.value = '';
+        FacilityAddress1.value = '';
+        FacilityCity.value = '';
+        FacilityState.value = '';
+        FacilityPhoneNumber.value = ''
+      "
+      [routerLink]="''"
+    >
+      Add Facility</button
+    ><br />
+  </div>
+  <br />
+</div>

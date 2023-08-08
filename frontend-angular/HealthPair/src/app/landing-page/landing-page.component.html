@@ -1,0 +1,72 @@
+<div
+  *ngIf="this.loading == true"
+  style="font-size: 150%; text-align: center; background-color: white"
+  class="p-5 shadow-lg rounded-pill my-2"
+>
+  Loading...
+  <div *ngIf="this.warningText">{{ warningText }}</div>
+</div>
+<div *ngIf="this.loading == false" class="container text-center">
+  <br />
+  <form
+    [formGroup]="landingPageForm"
+    (ngSubmit)="onSubmit()"
+    class="shadow-lg rounded-pill my-2"
+  >
+    <br /><br />
+    <h2>Find a doc who...</h2>
+    <div class="form-inline p-5">
+      <div class="md-form">
+        Accepts&nbsp;
+        <select
+          class="form-control"
+          formControlName="insurance"
+          *ngIf="insurances && currentPatient == undefined"
+          [ngClass]="{ 'is-invalid': submitted && f.insurance.errors }"
+        >
+          <option value="" selected hidden>Select Insurance</option>
+          <option *ngFor="let insurance of insurances">
+            {{ insurance.insuranceName }}
+          </option>
+        </select>
+        <select
+          class="form-control"
+          formControlName="insurance"
+          *ngIf="insurances && currentPatient != undefined"
+          [ngClass]="{ 'is-invalid': submitted && f.insurance.errors }"
+        >
+          <option value="this.currentPatient.insuranceName" selected>
+            {{ currentPatient.insuranceName }}
+          </option>
+          <option *ngFor="let insurance of insurances">
+            {{ insurance.insuranceName }}
+          </option>
+        </select>
+        &nbsp;and Practices&nbsp;
+        <select
+          class="form-control"
+          formControlName="specialty"
+          *ngIf="specialties"
+          [ngClass]="{ 'is-invalid': submitted && f.specialty.errors }"
+        >
+          <option value="" selected hidden>Select Specialty</option>
+          <option *ngFor="let specialty of specialties">
+            {{ specialty.specialty }}
+          </option>
+        </select>
+        &nbsp;&nbsp;
+        <span class="d-sm-none"><br /></span>
+        <button type="submit" class="nextButton"><span>Search </span></button>
+        <br />
+        <span *ngIf="submitted && f.insurance.errors" class="invalid-feedback">
+          <span *ngIf="f.insurance.errors.required">Insurance is required</span>
+        </span>
+        <span *ngIf="submitted && f.specialty.errors" class="invalid-feedback">
+          <span *ngIf="f.specialty.errors.required">Specialty is required</span>
+        </span>
+      </div>
+    </div>
+    <br />
+  </form>
+  <br />
+</div>

@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  web:
+    build:
+      context: HealthPairService
+      dockerfile: api.Dockerfile
+    image: arlingtonrev/healthpair-api:1.0
+
+  data:
+    build:
+      context: HealthPairService
+      dockerfile: db.Dockerfile
+    image: arlingtonrev/healthpair-db:1.0

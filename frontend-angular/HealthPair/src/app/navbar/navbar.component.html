@@ -1,0 +1,103 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-white">
+  <a class="navbar-brand" href="#">
+    <fa-icon
+      [icon]="faHandHoldingMedical"
+      class="text-black fa-2x"
+      style="color: red"
+    ></fa-icon>
+  </a>
+  <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" [ngClass]="{ show: navbarOpen }">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" routerLink="/landing-page">New Appointment</a>
+      </li>
+      <li
+        class="nav-item"
+        *ngIf="currentPatient && this.currentPatient.isAdmin"
+        [routerLinkActive]="['active']"
+      >
+        <a class="nav-link" routerLink="/facility">Facilities</a>
+      </li>
+      <li
+        class="nav-item"
+        *ngIf="currentPatient && this.currentPatient.isAdmin"
+        [routerLinkActive]="['active']"
+      >
+        <a class="nav-link" routerLink="/insurance">Insurance</a>
+      </li>
+      <li
+        class="nav-item"
+        *ngIf="currentPatient && this.currentPatient.isAdmin"
+        [routerLinkActive]="['active']"
+      >
+        <a class="nav-link" routerLink="/specialty">Specialty</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav float-left float-lg-right float-xl-right">
+      <li *ngIf="currentPatient" class="nav-item ml-1">
+        <a class="nav-link userButton">
+          <fa-icon
+            [icon]="faUserCircle"
+            class="fa-2x text-black d-none d-lg-inline"
+          ></fa-icon>
+          {{ this.currentPatient.patientFirstName }}</a
+        >
+      </li>
+      <li
+        *ngIf="currentPatient"
+        class="nav-item ml-1"
+        [routerLinkActive]="['active']"
+        hidden
+      >
+        <a class="nav-link navButton" routerLink="/register">Edit Profile</a>
+      </li>
+      <li
+        *ngIf="currentPatient"
+        class="nav-item mx-1"
+        [routerLinkActive]="['active']"
+      >
+        <a class="nav-link navButton" routerLink="appointment"
+          >My Appointments</a
+        >
+      </li>
+      <li
+        *ngIf="currentPatient"
+        class="nav-item"
+        [routerLinkActive]="['active']"
+      >
+        <a
+          class="nav-link text-white navButton"
+          routerLink="/logout"
+          (click)="logout()"
+          style="cursor: pointer"
+          >Logout</a
+        >
+      </li>
+      <li
+        *ngIf="currentPatient == undefined"
+        class="nav-item mr-1"
+        [routerLinkActive]="['active']"
+      >
+        <a class="nav-link text-white navButton" routerLink="/register"
+          >Register</a
+        >
+      </li>
+      <li
+        *ngIf="currentPatient == undefined"
+        class="nav-item"
+        [routerLinkActive]="['active']"
+      >
+        <a
+          class="nav-link text-white navButton"
+          routerLink="/login"
+          (click)="login()"
+          style="cursor: pointer"
+          >Login</a
+        >
+      </li>
+    </ul>
+  </div>
+</nav>

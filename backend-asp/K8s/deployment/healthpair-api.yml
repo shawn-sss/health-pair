@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: healthpair-api
+  labels:
+    app: healthpair
+    role: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: healthpair
+      role: api
+  template:
+    metadata:
+      labels:
+        app: healthpair
+        role: api
+    spec:
+      containers:
+        - name: healthpair-api
+          image: arlingtonrev/healthpair-api:1.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: DatabaseConnection
+              value: healthpairDbPostgreSqlK8s
+            - name: ConnectionStrings__healthpairDbPostgreSqlK8s
+              value: Host=healthpair-db;Username=postgres;Password=Pass@word
+            - name: CorsOrigins__0
+              value: http://localhost:4200
+            - name: CorsOrigins__1
+              value: http://192.168.99.100:4200
+            - name: CorsOrigins__2
+              value: http://healthpair-client.azurewebsites.net
+            - name: CorsOrigins__3
+              value: https://healthpair-client.azurewebsites.net
+            - name: CorsOrigins__4
+              value: http://healthpair-client-docker.azurewebsites.net
+            - name: CorsOrigins__5
+              value: https://healthpair-client-docker.azurewebsites.net
+            - name: CorsOrigins__6
+              value: http://a846dd4e8e4e14701bf08588e007d22b-636555553.us-east-2.elb.amazonaws.com
+            - name: CorsOrigins__7
+              value: http://healthpair.1010.tecnaturelabs.com
+            - name: CorsOrigins__8
+              value: https://healthpair.1010.tecnaturelabs.com
+            - name: UseHttpsRedirection
+              value: "false"

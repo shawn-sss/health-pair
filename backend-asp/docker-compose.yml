@@ -1,0 +1,40 @@
+# to run api and db in docker (debugger not possible): docker-compose up --build
+
+# to run db in docker and api outside docker (debugger possible): docker-compose up data
+#   and if you have Docker Desktop, set in user secrets: "DatabaseConnection": "HealthPairDbPostgreSqlDockerDesktop"
+
+# api accessible at localhost:8000 / 192.168.99.100:8000
+# db accessible at localhost:5432 / 192.168.99.100:5432
+version: "3.7"
+
+services:
+  web:
+    build:
+      context: HealthPairService
+      dockerfile: api.Dockerfile
+    image: healthpair-api:1.0
+    depends_on:
+      - data
+    ports:
+      - 8000:80
+    networks:
+      - default
+    environment:
+      DatabaseConnection: HealthPairDbPostgreSqlDockerCompose
+      ConnectionStrings__HealthPairDbPostgreSqlDockerCompose: Host=data;Username=postgres;Password=Pass@word
+      CorsOrigins__0: http://localhost:4200
+      CorsOrigins__1: http://192.168.99.100:4200
+      UseHttpsRedirection: "false"
+
+  data:
+    build:
+      context: HealthPairService
+      dockerfile: db.Dockerfile
+    image: arlingtonrev/healthpair-db:1.0
+    ports:
+      - 5432:5432
+    networks:
+      - default
+
+networks:
+  default:

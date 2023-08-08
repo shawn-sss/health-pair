@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  web:
+    build: HealthPair
+    image: arlingtonrev/healthpairclientapp:1.0
+    ports:
+      - 80:80
+    networks:
+      - default
+
+networks:
+  default:

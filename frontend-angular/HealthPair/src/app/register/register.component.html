@@ -1,0 +1,184 @@
+<h2>Register</h2>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" autocomplete="on">
+  <div class="form-group">
+    <label for="PatientFirstName">First Name</label>
+    <input
+      type="text"
+      formControlName="PatientFirstName"
+      class="textBoxStyling form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.PatientFirstName.errors }"
+      placeholder="First Name"
+    />
+    <div
+      *ngIf="submitted && f.PatientFirstName.errors"
+      class="invalid-feedback"
+    >
+      <div *ngIf="f.PatientFirstName.errors.required">
+        First Name is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="PatientLastName">Last Name</label>
+    <input
+      type="text"
+      formControlName="PatientLastName"
+      class="textBoxStyling form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.PatientLastName.errors }"
+      placeholder="Last Name"
+    />
+    <div *ngIf="submitted && f.PatientLastName.errors" class="invalid-feedback">
+      <div *ngIf="f.PatientLastName.errors.required">Last Name is required</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="PatientAddress1">Address</label>
+    <input
+      type="text"
+      formControlName="PatientAddress1"
+      class="textBoxStyling form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.PatientAddress1.errors }"
+      placeholder="1234 S. Place St."
+    />
+    <div *ngIf="submitted && f.PatientAddress1.errors" class="invalid-feedback">
+      <div *ngIf="f.PatientAddress1.errors.required">Address is required</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="PatientCity">City</label>
+    <input
+      type="text"
+      formControlName="PatientCity"
+      class="textBoxStyling form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.PatientCity.errors }"
+      placeholder="City"
+    />
+    <div *ngIf="submitted && f.PatientCity.errors" class="invalid-feedback">
+      <div *ngIf="f.PatientCity.errors.required">City is required</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="PatientState">State</label>
+    <input
+      type="text"
+      formControlName="PatientState"
+      class="textBoxStyling form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.PatientState.errors }"
+      placeholder="State"
+    />
+    <div *ngIf="submitted && f.PatientState.errors" class="invalid-feedback">
+      <div *ngIf="f.PatientState.errors.required">State is required</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="PatientZipcode">Zip Code</label>
+    <input
+      type="number"
+      formControlName="PatientZipcode"
+      class="textBoxStyling form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.PatientZipcode.errors }"
+      placeholder="22222"
+    />
+    <div *ngIf="submitted && f.PatientZipcode.errors" class="invalid-feedback">
+      <div *ngIf="f.PatientZipcode.errors.required">ZipCode is required</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="PatientBirthDay">Birth Date</label>
+    <input
+      type="date"
+      formControlName="PatientBirthDay"
+      class="textBoxStyling form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.PatientBirthDay.errors }"
+    />
+    <div *ngIf="submitted && f.PatientBirthDay.errors" class="invalid-feedback">
+      <div *ngIf="f.PatientBirthDay.errors.required">
+        Birth Date is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="PatientPhoneNumber">Phone Number (Only Numbers)</label>
+    <input
+      type="number"
+      formControlName="PatientPhoneNumber"
+      class="textBoxStyling form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.PatientPhoneNumber.errors }"
+      placeholder="5555555555"
+    />
+    <div
+      *ngIf="submitted && f.PatientPhoneNumber.errors"
+      class="invalid-feedback"
+    >
+      <div *ngIf="f.PatientPhoneNumber.errors.required">
+        Phone Number is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="PatientInsurance">Insurance</label>
+    <select
+      class="textBoxStyling form-control"
+      formControlName="PatientInsurance"
+      *ngIf="insurances"
+      [ngClass]="{ 'is-invalid': submitted && f.PatientInsurance.errors }"
+    >
+      <option value="" selected hidden>Select Insurance</option>
+      <option *ngFor="let insurance of insurances">
+        {{ insurance.insuranceName }}
+      </option>
+    </select>
+    <div
+      *ngIf="submitted && f.PatientInsurance.errors"
+      class="invalid-feedback"
+    >
+      <div *ngIf="f.PatientInsurance.errors.required">
+        Insurance is required
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="form-group">
+    <label for="PatientEmail">Email</label>
+    <input
+      type="email"
+      formControlName="PatientEmail"
+      class="textBoxStyling form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.PatientEmail.errors }"
+      placeholder="email@email.com"
+    />
+    <div *ngIf="submitted && f.PatientEmail.errors" class="invalid-feedback">
+      <div *ngIf="f.PatientEmail.errors.required">Email is required</div>
+    </div>
+  </div>
+  <div class="form-group mb-4">
+    <label for="PatientPassword">Password</label>
+    <input
+      type="password"
+      formControlName="PatientPassword"
+      class="textBoxStyling form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.PatientPassword.errors }"
+      placeholder="Password"
+    />
+    <div *ngIf="submitted && f.PatientPassword.errors" class="invalid-feedback">
+      <div *ngIf="f.PatientPassword.errors.required">Password is required</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <button type="submit" [disabled]="loading" class="newButton my-2">
+      <span
+        *ngIf="loading"
+        class="spinner-border spinner-border-sm mr-1"
+      ></span>
+      Register
+    </button>
+  </div>
+</form>

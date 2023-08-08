@@ -1,0 +1,11 @@
+.usersAppointment {
+  border: 5px solid red;
+  width: 25%;
+  border-radius: 5px;
+  padding: 1%;
+}
+
+.h2container {
+  width: 70%;
+  background-color: white;
+}

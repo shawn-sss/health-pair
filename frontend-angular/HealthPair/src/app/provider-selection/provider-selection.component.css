@@ -1,0 +1,14 @@
+.singlecard {
+  width: 80%;
+}
+
+.h2container {
+  width: 60%;
+  background-color: white;
+}
+
+.image {
+  width: 200px;
+  vertical-align: middle;
+  padding-bottom: 10px;
+}

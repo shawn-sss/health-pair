@@ -1,0 +1,64 @@
+<div class="container rounded h2container mt-2">
+  <h2>
+    Here are docs that accept {{ SearchService.sharedIns }} and practice
+    {{ SearchService.sharedSpec }}
+  </h2>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 mx-auto my-3" *ngFor="let prov of finalProviders">
+      <mdb-card>
+        <mdb-card-body class="text-center">
+          <div class="d-inline-block image col-md-3">
+            <mdb-card-img
+              [src]="this.imgurl"
+              alt="Card image cap"
+            ></mdb-card-img>
+          </div>
+          <div class="d-inline-block col-md-6 text-xs-right">
+            <mdb-card-title class="text-center text-md-left">
+              <h2>{{ prov.providerFirstName }} {{ prov.providerLastName }}</h2>
+            </mdb-card-title>
+            <mdb-card-text class="text-center text-md-left">
+              {{ prov.specialty }}
+            </mdb-card-text>
+            <mdb-card-text class="text-center text-md-left">
+              {{ prov.facilityAddress1 }}, {{ prov.facilityCity }},
+              {{ prov.facilityState }}
+            </mdb-card-text>
+          </div>
+          <div class="d-inline-block col-md-3 float-md-right text-md-right">
+            <mdb-card-text class="text-center text-md-right">
+              <span *ngIf="prov.distance == 0"> Calculating distance... </span>
+              <span *ngIf="prov.distance != 0">
+                {{ prov.distance }} kilometers away
+              </span>
+            </mdb-card-text>
+            <div>
+              <div *ngIf="currentPatient == undefined">
+                <span class="small">Account is required to continue.</span>
+                <br />
+                <button routerLink="/register" class="mr-2">Register</button>
+                <button routerLink="/login" style="margin-right: 5px">
+                  Log In
+                </button>
+              </div>
+              <button
+                *ngIf="currentPatient != undefined"
+                mdbBtn
+                class="nextButton"
+                routerLink="/appointment-details/{{ prov.providerId }}"
+                style="max-width: 140px"
+              >
+                <span>Select </span>
+              </button>
+            </div>
+          </div>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </div>
+</div>
+<button class="mb-2 mt-1 newButton" (click)="goBack()">Go Back</button>
+<br />
+<br />

@@ -1,0 +1,137 @@
+trigger:
+  - master
+
+pr:
+  - master
+
+stages:
+  - stage: build
+
+    variables:
+      nodeVersion: 12.x
+      appDir: HealthPair
+
+    jobs:
+      - job: build
+
+        pool:
+          vmImage: ubuntu-latest
+
+        steps:
+          - task: DockerCompose@0
+            inputs:
+              containerregistrytype: "Container Registry"
+              dockerComposeFile: "docker-compose.prod.yml"
+              action: "Build services"
+            displayName: docker-compose build
+
+      - job: test
+
+        pool:
+          vmImage: ubuntu-latest
+
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: "$(nodeVersion)"
+            displayName: node $(nodeVersion)
+
+          - script: npm ci
+            workingDirectory: $(appDir)
+            displayName: npm install
+
+          - task: SonarCloudPrepare@1
+            inputs:
+              SonarCloud: "HealthPairSC"
+              organization: "arlingtonrev"
+              scannerMode: "CLI"
+              configMode: "manual"
+              cliProjectKey: "arlingtonrev_HealthPair-Client"
+              cliProjectName: "healthpairclientapp"
+              cliSources: "$(appDir)/src"
+              extraProperties: |
+                sonar.coverage.exclusions=**/*.spec.ts
+                sonar.typescript.lcov.reportPaths=$(appDir)/coverage/$(appDir)/lcov.info
+            displayName: sonarcloud analysis prepare
+
+          - script: npx ng test --browsers ChromeHeadless --no-watch --code-coverage
+            workingDirectory: $(appDir)
+            continueOnError: true
+            displayName: ng test
+
+          # - script: npm run lint
+          #   workingDirectory: $(appDir)
+          #   displayName: ng lint
+
+          - task: SonarCloudAnalyze@1
+            displayName: sonarcloud analysis run
+
+          - task: SonarCloudPublish@1
+            inputs:
+              pollingTimeoutSec: "300"
+            displayName: sonarcloud results build publish
+
+  - stage: deploy
+    dependsOn: build
+
+    jobs:
+      - job: push
+
+        pool:
+          vmImage: ubuntu-latest
+
+        steps:
+          - task: DockerCompose@0
+            displayName: docker-compose build
+            inputs:
+              containerregistrytype: "Container Registry"
+              dockerComposeFile: "docker-compose.prod.yml"
+              action: "Build services"
+
+          - task: DockerCompose@0
+            displayName: docker-compose push
+            inputs:
+              containerregistrytype: "Container Registry"
+              dockerRegistryEndpoint: "HealthPairDocker"
+              dockerComposeFile: "docker-compose.prod.yml"
+              action: "Push services"
+
+          - task: PublishPipelineArtifact@1
+            displayName: k8s manifest publish
+            inputs:
+              targetPath: "K8s"
+              artifact: "K8s"
+              publishLocation: "pipeline"
+
+      - deployment: deploy_dev
+        dependsOn: push
+
+        pool:
+          vmImage: ubuntu-latest
+
+        environment: dev
+
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: KubernetesManifest@0
+                  displayName: kubectl apply
+                  inputs:
+                    action: "deploy"
+                    kubernetesServiceConnection: "dev-default-1588982326204"
+                    namespace: "default"
+                    manifests: "$(Pipeline.Workspace)/K8s/**/*.yml"
+
+                - task: Kubernetes@1
+                  displayName: kubectl rollout restart
+                  inputs:
+                    connectionType: "Kubernetes Service Connection"
+                    kubernetesServiceEndpoint: "dev-default-1588982326204"
+                    namespace: "default"
+                    command: "rollout"
+                    useConfigurationFile: true
+                    configuration: "$(Pipeline.Workspace)/K8s/deployment"
+                    arguments: "restart"
+                    secretType: "dockerRegistry"
+                    containerRegistryType: "Azure Container Registry"
