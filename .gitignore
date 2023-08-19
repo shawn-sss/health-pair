@@ -396,3 +396,37 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+## --- Angular, ASP API, Kubernetes, Docker,
+## --- SonarCloud, and Azure Pipelines
+
+# Angular
+/dist/
+/node_modules/
+*.log
+.e2e/
+editorconfig
+
+# ASP API
+appsettings.json
+appsettings.*.json
+
+# Kubernetes
+# *.yaml
+
+# Docker
+# Dockerfile*
+# docker-compose*
+# *.env
+
+# SonarCloud
+# .sonarcloud.properties
+# .scannerwork/
+
+# Azure Pipelines
+# azure-pipelines.yml
+# pipelines/
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
